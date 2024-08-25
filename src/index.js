@@ -68,9 +68,14 @@ const deleteToDo = id => {
 const reducer = (state = [], action) => {
   switch (action.type) {
     case ADD_TODO:
-      return [{ text: action.text, id: Date.now() }, ...state];
+      const newToDoObj = { text: action.text, id: Date.now() };
+      return [newToDoObj, ...state];
     case DELETE_TODO:
-      return state.filter(toDo => toDo.id !== action.id);
+      const confirmChk = window.confirm('Are you sure you want to delete it?');
+      if (confirmChk) {
+        return state.filter(toDo => toDo.id !== action.id);
+      }
+      return state;
     default:
       return state;
   }
